@@ -1,6 +1,6 @@
 from unittest2 import TestCase
-from http.client import Client
-from http.handlers import Handlers
+from httpclient import HTTPClient
+from httpclient.handlers import Handlers
 from http.request import Request
 from http.response import Response
 
@@ -54,7 +54,7 @@ class TestHandlers(TestCase):
 
     def test_prepare(self):
         request = Request('FOO', 'http')
-        client = Client()
+        client = HTTPClient()
         client.add_handler('request_prepare', _cb_request_prepare)
 
         resp = client.request(request)
@@ -73,7 +73,7 @@ class TestHandlers(TestCase):
 
     def test_response(self):
         request = Request('GET', 'http')
-        client = Client()
+        client = HTTPClient()
         client.add_handler('request_send', _cb_request_send)
         #client.add_handler('response_done', _cb_response_done)
         resp = client.request(request)

@@ -10,7 +10,7 @@ import os
 import time
 
 
-class Client(object):
+class HTTPClient(object):
 
     def __init__(self, agent=None, timeout=10, keep_alive=1,
             default_headers={}, max_redirect=7):

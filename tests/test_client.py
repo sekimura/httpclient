@@ -1,5 +1,5 @@
 from unittest2 import TestCase
-from http.client import Client
+from httpclient import HTTPClient
 from http.request import Request
 from http.response import Response
 
@@ -41,14 +41,14 @@ def _test_cb(request):
 class TestClient(TestCase):
 
     def test_base(self):
-        client = Client()
+        client = HTTPClient()
         self.assertTrue(client)
         self.assertEqual(client.agent, 'python-fluffyhttp')
-        client = Client(agent='foo')
+        client = HTTPClient(agent='foo')
         self.assertEqual(client.agent, 'foo')
 
     def test_headers(self):
-        client = Client()
+        client = HTTPClient()
         self.assertTrue(client.default_headers.get('Connection'))
         self.assertEqual(client.default_headers.get('User-Agent'), 'python-fluffyhttp')
 
@@ -57,7 +57,7 @@ class TestClient(TestCase):
             self._test_request(method)
 
     def _test_request(self, method):
-        client = Client()
+        client = HTTPClient()
         client.add_handler('request_send', _test_cb)
 
         request = Request(method, tests[method]['url'], tests[method]['headers'])
