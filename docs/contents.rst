@@ -1,0 +1,5 @@
+.. toctree::
+   :numbered:
+
+   install
+   tutorial
