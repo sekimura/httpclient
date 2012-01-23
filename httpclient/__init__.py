@@ -1,4 +1,5 @@
 from http import Request, Response, Headers, Date, Url
+from http.exception import http_exception
 from httpclient.handlers import Handlers
 from urllib3.poolmanager import PoolManager
 from urllib3 import connectionpool, poolmanager
@@ -8,8 +9,17 @@ import time
 
 class HTTPClient(object):
 
+    def HTTPException(fn):
+        def wrapper(*args):
+            res = fn(*args)
+            if args[0]._with_exceptions:
+                if res.is_error:
+                    raise http_exception(res)
+            return res
+        return wrapper
+
     def __init__(self, agent=None, timeout=10, keep_alive=1,
-            default_headers={}, max_redirect=7, with_exceptions=0):
+            default_headers={}, max_redirect=7, with_exceptions=False):
 
         self.timeout = 60
         self.max_redirect = max_redirect
@@ -49,29 +59,36 @@ class HTTPClient(object):
     def default_headers(self):
         return self._default_headers
 
+    @HTTPException
     def request(self, request):
         return self._request(request)
 
+    @HTTPException
     def head(self, url, headers={}):
         request = Request('HEAD', url, headers=headers)
         return self._request(request)
 
+    @HTTPException
     def get(self, url, headers={}):
         request = Request('GET', url, headers=headers)
         return self._request(request)
 
+    @HTTPException
     def put(self, url, headers={}, content=None):
         request = Request('PUT', url, headers=headers, content=content)
         return self._request(request)
 
+    @HTTPException
     def post(self, url, headers={}, content=None):
         request = Request('POST', url, headers=headers, content=content)
         return self._request(request)
 
+    @HTTPException
     def delete(self, url, headers={}, content=None):
         request = Request('DELETE', url, headers=headers)
         return self._request(request)
 
+    @HTTPException
     def mirror(self, url, file):
         req = Request('GET', url)
         res = self.request(req)

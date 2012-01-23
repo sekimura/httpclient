@@ -15,6 +15,9 @@ tests = {
     }
 }
 
+def _exception_cb(request):
+    return Response(status=404, message='Not Found')
+
 def _test_cb(request):
     if isinstance(request, Request) is False:
         print "not a Request object"
@@ -68,3 +71,20 @@ class TestClient(TestCase):
 
         self.assertTrue(resp)
         self.assertEqual(resp.status, 204)
+
+    def test_decorator_exception(self):
+        client = HTTPClient(with_exceptions=True)
+        client.add_handler('request_send', _exception_cb)
+
+        with self.assertRaises(Exception) as cm:
+            client.get('http://lumberjaph.net')
+
+        exception = cm.exception
+        self.assertTrue(exception)
+        self.assertTrue(exception.is_client_error)
+
+        # without `with_exception`, no exception should be raised
+        client = HTTPClient()
+        client.add_handler('request_send', _exception_cb)
+        res = client.get('http://lumberjaph.net')
+        self.assertEqual(res.status, 404)
