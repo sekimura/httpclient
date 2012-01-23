@@ -1,7 +1,6 @@
 from unittest2 import TestCase
 from httpclient import HTTPClient
-from http.request import Request
-from http.response import Response
+from http import Request, Response
 
 
 tests = {

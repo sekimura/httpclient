@@ -1,9 +1,5 @@
-from http.request import Request
-from http.response import Response
-from http.headers import Headers
-from http.date import Date
+from http import Request, Response, Headers, Date, Url
 from httpclient.handlers import Handlers
-from http.url import Url
 from urllib3.poolmanager import PoolManager
 from urllib3 import connectionpool, poolmanager
 import os
@@ -13,11 +9,12 @@ import time
 class HTTPClient(object):
 
     def __init__(self, agent=None, timeout=10, keep_alive=1,
-            default_headers={}, max_redirect=7):
+            default_headers={}, max_redirect=7, with_exceptions=0):
 
         self.timeout = 60
         self.max_redirect = max_redirect
         self._handlers = Handlers()
+        self._with_exceptions = with_exceptions
 
         if agent is None:
             self.agent = 'python-fluffyhttp'

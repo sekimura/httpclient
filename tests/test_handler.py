@@ -1,8 +1,7 @@
 from unittest2 import TestCase
 from httpclient import HTTPClient
 from httpclient.handlers import Handlers
-from http.request import Request
-from http.response import Response
+from http import Request, Response
 
 
 def _cb_request_prepare(request):
