@@ -1,4 +1,6 @@
-from http import Request, Response, Headers, Date, Url
+from http import (
+    Request, Response, Headers, Date, Url
+)
 from http.exception import http_exception
 from httpclient.handlers import Handlers
 from urllib3.poolmanager import PoolManager
@@ -8,15 +10,6 @@ import time
 
 
 class HTTPClient(object):
-
-    def HTTPException(fn):
-        def wrapper(*args):
-            res = fn(*args)
-            if args[0]._with_exceptions:
-                if res.is_error:
-                    raise http_exception(res)
-            return res
-        return wrapper
 
     def __init__(self, agent=None, timeout=10, keep_alive=1,
             default_headers={}, max_redirect=7, with_exceptions=False):
@@ -45,6 +38,15 @@ class HTTPClient(object):
         self._poolmanager = PoolManager(
             maxsize=keep_alive
         )
+
+    def HTTPException(fn):
+        def wrapper(*args):
+            res = fn(*args)
+            if args[0]._with_exceptions:
+                if res.is_error:
+                    raise http_exception(res)
+            return res
+        return wrapper
 
     def add_handler(self, position, cb):
         self._handlers.add_handler(position, cb)
@@ -89,11 +91,11 @@ class HTTPClient(object):
         return self._request(request)
 
     @HTTPException
-    def mirror(self, url, file):
+    def mirror(self, url, filename):
         req = Request('GET', url)
         res = self.request(req)
         if res.is_success:
-            f = open(file, 'w')
+            f = open(filename, 'w')
             f.write(res.content)
             f.close()
             last_modified = Date.time2epoch(res.last_modified)
