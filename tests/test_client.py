@@ -15,8 +15,10 @@ tests = {
     }
 }
 
+
 def _exception_cb(request):
     return Response(status=404, message='Not Found')
+
 
 def _test_cb(request):
     if isinstance(request, Request) is False:
@@ -82,6 +84,7 @@ class TestClient(TestCase):
         exception = cm.exception
         self.assertTrue(exception)
         self.assertTrue(exception.is_client_error)
+        self.assertEqual(str(exception), "Not Found")
 
         # without `with_exception`, no exception should be raised
         client = HTTPClient()

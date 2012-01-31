@@ -7,17 +7,23 @@ from http import Request, Response
 def _cb_request_prepare(request):
     raise
 
+
 def _cb_request_prepare_change_request(request):
     request = Request('PUT', 'http')
     return request
 
-def _cb_request_prepare_do_nothing(request): pass
+
+def _cb_request_prepare_do_nothing(request):
+    pass
+
 
 def _cb_request_send(request):
     return Response(status=204)
 
+
 def _cb_response_done(response):
     return Response(status=202)
+
 
 class TestHandlers(TestCase):
 
