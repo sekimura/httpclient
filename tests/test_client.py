@@ -1,15 +1,15 @@
 from unittest2 import TestCase
-from httpclient import HTTPClient
+from httpclient import HTTPClient, __version__
 from http import Request, Response
 
 
 tests = {
     'GET': {
-        'url': 'http://lumberjaph.net',
+        'url': 'http://lumberjaph.net/',
         'headers': {'Accept-Type': 'text/html'}
     },
     'POST': {
-        'url': 'http://lumberjaph.net',
+        'url': 'http://lumberjaph.net/',
         'headers': {'Content-Type': 'text/plain'},
         'content': 'foo',
     }
@@ -47,14 +47,14 @@ class TestClient(TestCase):
     def test_base(self):
         client = HTTPClient()
         self.assertTrue(client)
-        self.assertEqual(client.agent, 'python-fluffyhttp')
+        self.assertEqual(client.agent, "python-httpclient/{v}".format(v=__version__))
         client = HTTPClient(agent='foo')
         self.assertEqual(client.agent, 'foo')
 
     def test_headers(self):
         client = HTTPClient()
         self.assertTrue(client.default_headers.get('Connection'))
-        self.assertEqual(client.default_headers.get('User-Agent'), 'python-fluffyhttp')
+        self.assertEqual(client.default_headers.get('User-Agent'), 'python-httpclient/{v}'.format(v=__version__))
 
     def test_requests(self):
         for method in ['GET', 'POST']:

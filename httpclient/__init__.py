@@ -1,3 +1,12 @@
+"""
+httpclient
+
+:copyright: (c) 2012 by Franck Cuny
+:license: MIT
+
+"""
+
+
 from http import (
     Request, Response, Headers, Date, Url
 )
@@ -7,6 +16,12 @@ from urllib3.poolmanager import PoolManager
 from urllib3 import connectionpool, poolmanager
 import os
 import time
+
+__title__ = 'httpclient'
+__version__ = '0.1'
+__author__ = 'Franck Cuny'
+__license__ = 'MIT'
+__copyright__ = 'Copyright 2012 Franck Cuny'
 
 
 class HTTPClient(object):
@@ -20,7 +35,8 @@ class HTTPClient(object):
         self._with_exceptions = with_exceptions
 
         if agent is None:
-            self.agent = 'python-fluffyhttp'
+            self.agent = "python-httpclient/{version}".format(
+                version=__version__)
         else:
             self.agent = agent
 
@@ -107,6 +123,7 @@ class HTTPClient(object):
         try:
             resp = self._make_request(request)
         except Exception, e:
+            print e
             raise e
 
         if resp.is_redirect and len(resp.redirects) < self.max_redirect:
