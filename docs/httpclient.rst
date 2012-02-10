@@ -8,6 +8,18 @@ HTTPClient
 Synopsis
 --------
 
+::
+
+   >>> from http import Request
+   >>> from httpclient import HTTPClient
+   >>> request = Request('GET', 'http://lumberjaph.net')
+   >>> client = HTTPClient()
+   >>> client.request(request)
+   >>> response = client.request(request)
+   >>> print response.status
+   200
+
+
 Interface
 ---------
 

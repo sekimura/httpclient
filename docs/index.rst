@@ -9,10 +9,10 @@ This module is heavily inspired by LWP::UserAgent
 
     >>> from httpclient import HTTPClient
     >>> from http import Request
-    >>> r = Request('GET', 'http://lumberjaph.net')
-    >>> c = HTTPClient()
-    >>> resp = c.request(r)
-    >>> print resp.status
+    >>> request = Request('GET', 'http://lumberjaph.net')
+    >>> cclient = HTTPClient()
+    >>> response = cclient.request(request)
+    >>> print response.status
     200
 
 User Guide
