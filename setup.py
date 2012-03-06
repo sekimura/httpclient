@@ -1,10 +1,8 @@
 from setuptools import setup
 
-from httpclient import __version__
-
 setup(
     name='httpclient',
-    version=__version__,
+    version='0.1',
     description='HTTP Client library for Python',
     long_description=open('README.rst').read(),
     author='Franck Cuny',
