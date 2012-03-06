@@ -13,7 +13,7 @@ setup(
     packages=['httpclient'],
     license='MIT',
     tests_require=['coverage', 'nose', 'unittest2', 'pep8'],
-    install_requires=['http', 'urllib3'],
+    install_requires=['http==0.02', 'urllib3'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
